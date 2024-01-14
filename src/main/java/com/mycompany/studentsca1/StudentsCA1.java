@@ -31,15 +31,29 @@ public class StudentsCA1 {
             
             br.close();
             
+
             // Storing each line from the txt file in a variable
             List<String> lines = Files.lines(Paths.get("students.txt")).collect(Collectors.toList());
-            String studentsName = lines.get(0);
+            String studentFullName = lines.get(0);
             Integer numberOfClasses = Integer.parseInt(lines.get(1));
             String studentsID = lines.get(2);
             
-            System.out.println(studentsName);
+            // Finding where the position of the space is to see where the name ends
+            int locationSpace = studentFullName.indexOf(" ");
+            
+            // Finding the position of the last char to see where the surname ends
+            int locationLastChar = studentFullName.length()-1 ;
+            
+            // Storing name and surname in separate variables
+            String name = studentFullName.substring(0,locationSpace);
+            String surname = studentFullName.substring(locationSpace+1,locationLastChar);
+            
+
+            System.out.println(studentFullName);
             System.out.println(numberOfClasses);
             System.out.println(studentsID);
+            System.out.println(name);
+            System.out.println(surname);
             
 
         } catch (Exception e) {
