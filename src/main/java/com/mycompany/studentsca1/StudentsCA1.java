@@ -5,6 +5,9 @@
 
 package com.mycompany.studentsca1;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 /**
  *
  * @author peta
@@ -12,6 +15,22 @@ package com.mycompany.studentsca1;
 public class StudentsCA1 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
+        try {
+            // Reading the students.txt file
+            BufferedReader br = new BufferedReader(new FileReader("students.txt"));
+            String studentsFile = br.readLine();
+            
+            while (studentsFile != null) {
+                System.out.println(studentsFile);
+                studentsFile = br.readLine();
+            }
+            
+            br.close();
+            
+
+        } catch (Exception e) {
+            System.out.println("error");
+        }
     }
 }
