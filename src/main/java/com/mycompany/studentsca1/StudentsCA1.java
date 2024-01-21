@@ -53,8 +53,8 @@ public class StudentsCA1 {
             // before declaring different variables based on this 0.
             if (!studentNumber.contains("0")) {
                 System.out.println("""
-                                   The last number after the letters in the Student number,
-                                   has to be a positive integer between 0001 and 0200.\n"""); 
+                                   The last number after the letters in the student number,
+                                   has to be a positive integer of four digits between 0001 and 0200.\n"""); 
             }
             
             // Finding where the position of the 0 is to see where the letters 
@@ -96,19 +96,18 @@ public class StudentsCA1 {
             String surname = studentFullName.substring(locationSpace+1,locationLastCharStudentFullName+1);
 
             
-            // Declaring a variable for the workload based on the number of clases / TO CREATE CLASSES TO BE ABLE TO CALL THIS VARIABLE
-            String workload;
-            
-            if (numberOfClasses == 1) {
-                workload = "Very Light";
-                } else if (numberOfClasses == 2) {
-                    workload = "Light";
-                    } else if (numberOfClasses >= 3 && numberOfClasses <= 5) {
-                        workload = "Part Time";
-                        } else if (numberOfClasses <= 6) {
-                            workload = "Full Time";
-                            }
-            
+            // Declaring a variable for the workload based on the number of clases
+                    String workload = "";
+
+                    if (numberOfClasses == 1) {
+                        workload = "Very Light";
+                        } else if (numberOfClasses == 2) {
+                            workload = "Light";
+                            } else if (numberOfClasses >= 3 && numberOfClasses <= 5) {
+                                workload = "Part Time";
+                                } else if (numberOfClasses >= 6) {
+                                    workload = "Full Time";
+                                    }
             
 
             // Exception handling.
@@ -126,8 +125,8 @@ public class StudentsCA1 {
                         } else if (!studentNumberFirstTwoChars.matches("[0-9]+")) {
                             System.out.println("The first two chars of the student number must be positive integer numbers.");
                             // Condition to make sure that the first two chars of the student ID number are between 22 and 25, to represent the year.
-                            } else if (studentNumberFirstTwoCharsInt < 22 || studentNumberFirstTwoCharsInt > 25) {
-                                System.out.println("The first two chars of the student number must be between 22 and 25, to represent the year");
+                            } else if (studentNumberFirstTwoCharsInt <= 20 || studentNumberFirstTwoCharsInt > 25) {
+                                System.out.println("The first two chars of the student number must be between 20 and 25, to represent the year");
                                 // Condition to make sure there are letters after the year in the ID.
                                 } else if (!studentNumberMiddleChars.matches("[a-zA-Z]+")) {
                                     System.out.println("""
@@ -142,7 +141,7 @@ public class StudentsCA1 {
                                             System.out.println("Last number of the student number has to be an integer number between 0001 and 0200");
                                             } else {
                                                 BufferedWriter bw = new BufferedWriter(new FileWriter("status.txt", true));
-                                                bw.write(studentNumber + " - " + surname + "\n" + "Workload");
+                                                bw.write(studentNumber + " - " + surname + "\n" + workload + "\n");
                                                 bw.close();
                                                 System.out.println("The status.txt file has been succesfully created.");
                                                 }
@@ -154,5 +153,6 @@ public class StudentsCA1 {
             System.out.println(e);
         }
     }
+
 
 }
