@@ -42,7 +42,7 @@ public class StudentsCA1 {
             // Full name
             String studentFullName = lines.get(0);
             // Number of classes
-            // CREATE EXCEPTION FOR THIS INPUT TO BE A POSITIVE INTEGER NUMBER / also at the beginning is Integer or int
+            // CREATE EXCEPTION FOR THIS INPUT TO BE A POSITIVE INTEGER NUMBER
             String numberOfClasses = (lines.get(1));
             int numberOfClassesInt = Integer.parseInt(numberOfClasses);
             
@@ -124,30 +124,30 @@ public class StudentsCA1 {
                             // Condition to make sure that the first two chars of the student number are positive integers.
                             } else if (!studentNumberFirstTwoChars.matches("^[1-9]\\d*$")) {
                                 System.out.println("The first two chars of the student number must be positive integer numbers.");
-                                // Condition to make sure that the first two chars of the student number are between 22 and 25, to represent the year.
+                                // Condition to make sure that the first number of the student number is at least 20, to represent the year.
                                 // No need to do a regex for positive integers as this has already been parsed as integer.
-                                } else if (studentNumberFirstTwoCharsInt <= 20 || studentNumberFirstTwoCharsInt > 25) {
-                                    System.out.println("The first two chars of the student number must be between 20 and 25, to represent the year");
+                                } else if (studentNumberFirstTwoCharsInt < 20) {
+                                    System.out.println("The first numbers of the student number must be at least 20, to represent the year.");
                                     // Condition to make sure there are letters after the year in the student number.
                                     } else if (!studentNumberMiddleChars.matches("[a-zA-Z]+")) {
-                                        System.out.println("""
-                                                           The student number must be a minimum of 6 characters with the first 2 characters
-                                                           being numbers, the 3rd  and 4th characters (and possibly 5th) being a letter, and everything                                                                                            
-                                                           after the last letter character being a number.""");
-                                        // Condition to make sure the last number in the student number is a number
-                                        } else if (!studentNumberLastChars.matches("^[0-9]\\d*$")) {
-                                            System.out.println("Last number of the student number has to be an integer number between 0001 and 0200");
-                                            // Condition to make sure the last number in the student number is a number below 200
-                                            // No need to do a regex for positive integers as this has already been parsed as integer.
-                                            } else if (studentNumberLastCharsInt < 0001 || studentNumberLastCharsInt > 0200) {
-                                                System.out.println("Last number of the student number has to be an integer number between 0001 and 0200");
-                                                // If all conditions are met, I create the output txt file
-                                                } else {
-                                                    BufferedWriter bw = new BufferedWriter(new FileWriter("status.txt", true));
-                                                    bw.write(studentNumber + " - " + surname + "\n" + workload + "\n");
-                                                    bw.close();
-                                                    System.out.println("The status.txt file has been succesfully created.");
-                                                    }
+                                        System.out.println("The 3rd, 4th and possibly 5th character of the student number must be letters.");
+                                        // Condition to make sure there are letters after the year in the student number.
+                                        } else if (studentNumberMiddleChars.length() > 3) {
+                                            System.out.println("The letters in the student number have to be maximum 3 characters.");
+                                            // Condition to make sure the last number in the student number is a number
+                                            } else if (!studentNumberLastChars.matches("^[0-9]\\d*$")) {
+                                                System.out.println("Last number of the student number has to be an integer number between 1 and 200.");
+                                                // Condition to make sure the last number in the student number is a number below 200
+                                                // No need to do a regex for positive integers as this has already been parsed as integer.
+                                                } else if (studentNumberLastCharsInt < 0001 || studentNumberLastCharsInt > 0200) {
+                                                    System.out.println("Last number of the student number has to be an integer number between 1 and 200.");
+                                                    // If all conditions are met, I create the output txt file
+                                                    } else {
+                                                        BufferedWriter bw = new BufferedWriter(new FileWriter("status.txt", true));
+                                                        bw.write(studentNumber + " - " + surname + "\n" + workload + "\n");
+                                                        bw.close();
+                                                        System.out.println("The status.txt file has been succesfully created.");
+                                                        }
             
             
 
