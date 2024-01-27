@@ -30,7 +30,6 @@ public class StudentsCA1 {
             while (studentsFile != null) {
                 studentsFile = br.readLine();
             }
-
             br.close();
             
 
@@ -44,40 +43,38 @@ public class StudentsCA1 {
             String studentFullName = lines.get(0);
             // Number of classes
             // CREATE EXCEPTION FOR THIS INPUT TO BE A POSITIVE INTEGER NUMBER / also at the beginning is Integer or int
-            int numberOfClasses = Integer.parseInt(lines.get(1));
+            String numberOfClasses = (lines.get(1));
+            int numberOfClassesInt = Integer.parseInt(numberOfClasses);
+            
             // ID
             String studentNumber = lines.get(2);
             
             
-            // Condition to make sure there is a 0 for the Student number
-            // before declaring different variables based on this 0.
-            if (!studentNumber.contains("0")) {
-                System.out.println("""
-                                   The last number after the letters in the student number,
-                                   has to be a positive integer of four digits between 0001 and 0200.\n"""); 
-            }
+            // Using split method and regex to store the different characters into variables
+            // to be able to check the appropriate conditions
             
-            // Finding where the position of the 0 is to see where the letters 
-            // end and where the second number starts.
-            int locationZero = studentNumber.indexOf("0");
+            // First chars
+            String[] studentFirstCharsSplit = studentNumber.split("(?<=\\d)(?=\\D)");
+            String studentNumberFirstTwoChars = studentFirstCharsSplit[0];
             
-            // Finding the position of the last char to see where the student number ends
-            int locationLastCharStudentNumber = studentNumber.length()-1;
+            // Middle chars
+            String[] studentMiddleCharsSplit = studentFirstCharsSplit[1].split("(?<=\\D)(?=\\d)");
+            String studentNumberMiddleChars = studentMiddleCharsSplit[0];
             
+            // Last chars
+            String studentNumberLastCharsSplit = studentMiddleCharsSplit[1];
+            String studentNumberLastChars = studentNumberLastCharsSplit;
             
-            // Storing the first two chars of the student number to be able to check the conditions
-            String studentNumberFirstTwoChars = studentNumber.substring(0,2);
+
             // Storing the first two chars of the student number as int for a different condition that cannot be aplied to string type
             int studentNumberFirstTwoCharsInt = Integer.parseInt(studentNumberFirstTwoChars);
-            
-            // Storing the middle chars of the student number to be able to check the conditions
-            String studentNumberMiddleChars = studentNumber.substring(2,locationZero);
-            
-            // Storing the last chars of the student number to be able to check the conditions
-            String studentNumberLastChars = studentNumber.substring(locationZero, locationLastCharStudentNumber);
             // Storing the last char of the student number as int for a different condition that cannot be aplied to string type
             int studentNumberLastCharsInt = Integer.parseInt(studentNumberLastChars);
             
+            
+            // Finding the position of the last char to see where the student number ends
+            int locationLastCharStudentNumber = studentNumber.length()-1;
+
             
             // Condition to make sure there is a dash in the file
             // before declaring different variables based on this dash.
@@ -97,17 +94,17 @@ public class StudentsCA1 {
 
             
             // Declaring a variable for the workload based on the number of clases
-                    String workload = "";
+            String workload = "";
 
-                    if (numberOfClasses == 1) {
-                        workload = "Very Light";
-                        } else if (numberOfClasses == 2) {
-                            workload = "Light";
-                            } else if (numberOfClasses >= 3 && numberOfClasses <= 5) {
-                                workload = "Part Time";
-                                } else if (numberOfClasses >= 6) {
-                                    workload = "Full Time";
-                                    }
+            if (numberOfClassesInt == 1) {
+                workload = "Very Light";
+                } else if (numberOfClassesInt == 2) {
+                    workload = "Light";
+                    } else if (numberOfClassesInt >= 3 && numberOfClassesInt <= 5) {
+                        workload = "Part Time";
+                        } else if (numberOfClassesInt >= 6) {
+                            workload = "Full Time";
+                            }
             
 
             // Exception handling.
@@ -117,34 +114,40 @@ public class StudentsCA1 {
                 // Condition to make sure that the surname is letters and/or numbers.
                 } else if (!surname.matches("[a-zA-Z0-9]+")) {
                     System.out.println("The surname must be letters and/or numbers.");
-                    // Condition to make sure that the number of classes is between 1 and 8 (inclusive).
-                    // No need to do a regex for positive integers as this has already been parsed as integer.
-                    } else if (numberOfClasses < 0 || numberOfClasses > 8) {
+                    // Condition to make sure that the number of classes is an integer NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    } else if (!numberOfClasses.matches("^[1-9]\\d*$")) {
                         System.out.println("The number of classes must be an integer value between 1 and 8 (inclusive).");
-                        // Condition to make sure that the first two chars of the student ID number are positive integers.
-                        } else if (!studentNumberFirstTwoChars.matches("[0-9]+")) {
-                            System.out.println("The first two chars of the student number must be positive integer numbers.");
-                            // Condition to make sure that the first two chars of the student ID number are between 22 and 25, to represent the year.
-                            } else if (studentNumberFirstTwoCharsInt <= 20 || studentNumberFirstTwoCharsInt > 25) {
-                                System.out.println("The first two chars of the student number must be between 20 and 25, to represent the year");
-                                // Condition to make sure there are letters after the year in the ID.
-                                } else if (!studentNumberMiddleChars.matches("[a-zA-Z]+")) {
-                                    System.out.println("""
-                                                       The student number must be a minimum of 6 characters with the first 2 characters
-                                                       being numbers, the 3rd  and 4th characters (and possibly 5th) being a letter, and everything                                                                                            
-                                                       after the last letter character being a number.""");
-                                    // Condition to make sure the last number in the student number is a number
-                                    } else if (!studentNumberLastChars.matches("[0-9]+")) {
-                                        System.out.println("Last number of the student number has to be an integer number between 0001 and 0200");
-                                        // Condition to make sure the last number in the student number is a number below 200
-                                        } else if (studentNumberLastCharsInt < 0001 || studentNumberLastCharsInt > 0200) {
+                        // Condition to make sure that the number of classes is between 1 and 8 (inclusive).
+                        // No need to do a regex for positive integers as this has already been parsed as integer.
+                        } else if (numberOfClassesInt < 0 || numberOfClassesInt > 8) {
+                            System.out.println("The number of classes must be an integer value between 1 and 8 (inclusive).");
+                            // Condition to make sure that the first two chars of the student number are positive integers.
+                            } else if (!studentNumberFirstTwoChars.matches("^[1-9]\\d*$")) {
+                                System.out.println("The first two chars of the student number must be positive integer numbers.");
+                                // Condition to make sure that the first two chars of the student number are between 22 and 25, to represent the year.
+                                // No need to do a regex for positive integers as this has already been parsed as integer.
+                                } else if (studentNumberFirstTwoCharsInt <= 20 || studentNumberFirstTwoCharsInt > 25) {
+                                    System.out.println("The first two chars of the student number must be between 20 and 25, to represent the year");
+                                    // Condition to make sure there are letters after the year in the student number.
+                                    } else if (!studentNumberMiddleChars.matches("[a-zA-Z]+")) {
+                                        System.out.println("""
+                                                           The student number must be a minimum of 6 characters with the first 2 characters
+                                                           being numbers, the 3rd  and 4th characters (and possibly 5th) being a letter, and everything                                                                                            
+                                                           after the last letter character being a number.""");
+                                        // Condition to make sure the last number in the student number is a number
+                                        } else if (!studentNumberLastChars.matches("^[0-9]\\d*$")) {
                                             System.out.println("Last number of the student number has to be an integer number between 0001 and 0200");
-                                            } else {
-                                                BufferedWriter bw = new BufferedWriter(new FileWriter("status.txt", true));
-                                                bw.write(studentNumber + " - " + surname + "\n" + workload + "\n");
-                                                bw.close();
-                                                System.out.println("The status.txt file has been succesfully created.");
-                                                }
+                                            // Condition to make sure the last number in the student number is a number below 200
+                                            // No need to do a regex for positive integers as this has already been parsed as integer.
+                                            } else if (studentNumberLastCharsInt < 0001 || studentNumberLastCharsInt > 0200) {
+                                                System.out.println("Last number of the student number has to be an integer number between 0001 and 0200");
+                                                // If all conditions are met, I create the output txt file
+                                                } else {
+                                                    BufferedWriter bw = new BufferedWriter(new FileWriter("status.txt", true));
+                                                    bw.write(studentNumber + " - " + surname + "\n" + workload + "\n");
+                                                    bw.close();
+                                                    System.out.println("The status.txt file has been succesfully created.");
+                                                    }
             
             
 
