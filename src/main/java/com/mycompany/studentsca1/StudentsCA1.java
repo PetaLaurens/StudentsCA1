@@ -25,7 +25,7 @@ public class StudentsCA1 {
         try {
             
             // Reading the students.txt file
-            BufferedReader br = new BufferedReader(new FileReader("students.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("studentsTest.txt"));
             String studentsFile = br.readLine();
             
             // Starting point of txt file lines
@@ -33,18 +33,17 @@ public class StudentsCA1 {
             int lineOne = 1;
             int lineTwo = 2;
             
-
+            // Reading all lines of the file
             while (studentsFile != null) {
                 studentsFile = br.readLine();
                 
 
-            // Storing each line from the txt file into a variable
-            List<String> lines = Files.lines(Paths.get("students.txt")).collect(Collectors.toList());
+            // Storing each line from the txt file into a list
+            List<String> lines = Files.lines(Paths.get("studentsTest.txt")).collect(Collectors.toList());
 
 
             /// FULL NAME ///
             String studentFullName = lines.get(lineZero);
-
 
             // Condition to make sure there is a space in the file
             // before declaring different variables based on this space.
@@ -64,9 +63,8 @@ public class StudentsCA1 {
 
 
             /// NUMBER OF CLASSES ///
-            // CREATE EXCEPTION FOR THIS INPUT  TO BE A POSITIVE INTEGER NUMBER
             String numberOfClasses = (lines.get(lineOne));
-
+            // Storing the number of classes as int for a condition that cannot be applied to string type
             int numberOfClassesInt = Integer.parseInt(numberOfClasses);
             
             // Declaring a variable for the workload based on the number of clases
@@ -103,9 +101,9 @@ public class StudentsCA1 {
             String studentNumberLastChars = studentNumberLastCharsSplit;
 
 
-            // Storing the first two chars of the student number as int for a different condition that cannot be aplied to string type
+            // Storing the first two chars of the student number as int for a condition that cannot be applied to string type
             int studentNumberFirstTwoCharsInt = Integer.parseInt(studentNumberFirstTwoChars);
-            // Storing the last char of the student number as int for a different condition that cannot be aplied to string type
+            // Storing the last char of the student number as int for a condition that cannot be applied to string type
             int studentNumberLastCharsInt = Integer.parseInt(studentNumberLastChars);
 
 
@@ -132,62 +130,68 @@ public class StudentsCA1 {
                         lineOne += 3;
                         lineTwo += 3;
                         // Condition to make sure there are letters after the year in the student number.
-                        } else if (studentNumberMiddleChars.length() > 3) {
-                            System.out.println("The letters in the student number have to be maximum 3 characters.");
+                        } else if (studentNumberMiddleChars.length() < 2 || studentNumberMiddleChars.length() > 3) {
+                            System.out.println("The letters in the student number have to be minimum 2 and maximum 3 characters.");
                             lineZero += 3;
                             lineOne += 3;
                             lineTwo += 3;
-                            // Condition to make sure the last number in the student number is a number
-                            } else if (!studentNumberLastChars.matches("^[0-9]\\d*$")) {
-                                System.out.println("Last number of the student number has to be an integer number between 1 and 200.");
-                                lineZero += 3;
-                                lineOne += 3;
-                                lineTwo += 3;
-                                // Condition to make sure the last number in the student number is a number between 1 and 200
-                                // No need to do a regex for positive integers as this has already been parsed as integer.
-                                } else if (studentNumberLastCharsInt < 1 || studentNumberLastCharsInt > 200) {
+                                // Condition to make sure the last number in the student number is a number
+                                } else if (!studentNumberLastChars.matches("^[0-9]\\d*$")) {
                                     System.out.println("Last number of the student number has to be an integer number between 1 and 200.");
                                     lineZero += 3;
                                     lineOne += 3;
                                     lineTwo += 3;
-                                    // Condition to make sure that the first name is in letters.
-                                    } else if (!name.matches("[a-zA-Z]+")) {
-                                        System.out.println("The first name must be letters only.");
+                                    // Condition to make sure the last number in the student number is a number between 1 and 200
+                                    // No need to do a regex for positive integers as this has already been parsed as integer.
+                                    } else if (studentNumberLastCharsInt < 1 || studentNumberLastCharsInt > 200) {
+                                        System.out.println("Last number of the student number has to be an integer number between 1 and 200.");
                                         lineZero += 3;
                                         lineOne += 3;
                                         lineTwo += 3;
-                                        // Condition to make sure that the surname is letters and/or numbers.
-                                        } else if (!surname.matches("[a-zA-Z0-9]+")) {
-                                            System.out.println("The surname must be letters and/or numbers.");
+                                        // Condition to make sure that the student number is at least 6 chars
+                                        } else if (studentNumber.length() < 6) {
+                                            System.out.println("The student 'number' must be a minimum of 6 characters.");
                                             lineZero += 3;
                                             lineOne += 3;
                                             lineTwo += 3;
-                                            // Condition to make sure that the number of classes is an integer NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                                            } else if (!numberOfClasses.matches("^[0-9]+$")) {
-                                                System.out.println("The number of classes must be an integer value between 1 and 8 (inclusive).");
+                                            // Condition to make sure that the first name is in letters.
+                                            } else if (!name.matches("[a-zA-Z]+")) {
+                                                System.out.println("The first name must be letters only.");
                                                 lineZero += 3;
                                                 lineOne += 3;
                                                 lineTwo += 3;
-                                                // Condition to make sure that the number of classes is between 1 and 8 (inclusive).
-                                                // No need to do a regex for positive integers as this has already been parsed as integer.
-                                                } else if (numberOfClassesInt < 0 || numberOfClassesInt > 8) {
-                                                    System.out.println("The number of classes must be an integer value between 1 and 8 (inclusive).");
+                                                // Condition to make sure that the surname is letters and/or numbers.
+                                                } else if (!surname.matches("[a-zA-Z0-9]+")) {
+                                                    System.out.println("The surname must be letters and/or numbers.");
                                                     lineZero += 3;
                                                     lineOne += 3;
                                                     lineTwo += 3;
-                                                    // If all conditions are met, I create the output txt file
-                                                    } else {
-
-                                                        BufferedWriter bw = new BufferedWriter(new FileWriter("status.txt", true));
-                                                        bw.write(studentNumber + " - " + surname + "\n");
-                                                        bw.write(workload + "\n");
-                                                        bw.close();
-
+                                                    // Condition to make sure that the number of classes is a positive integer
+                                                    } else if (!numberOfClasses.matches("^[0-9]+$")) {
+                                                        System.out.println("The number of classes must be an integer value between 1 and 8 (inclusive).");
                                                         lineZero += 3;
                                                         lineOne += 3;
                                                         lineTwo += 3;
+                                                        // Condition to make sure that the number of classes is between 1 and 8 (inclusive).
+                                                        // No need to do a regex for positive integers as this has already been parsed as integer.
+                                                        } else if (numberOfClassesInt < 0 || numberOfClassesInt > 8) {
+                                                            System.out.println("The number of classes must be an integer value between 1 and 8 (inclusive).");
+                                                            lineZero += 3;
+                                                            lineOne += 3;
+                                                            lineTwo += 3;
+                                                            // If all conditions are met, I create the output txt file
+                                                            } else {
 
-                                                }
+                                                                BufferedWriter bw = new BufferedWriter(new FileWriter("status.txt", true));
+                                                                bw.write(studentNumber + " - " + surname + "\n");
+                                                                bw.write(workload + "\n");
+                                                                bw.close();
+
+                                                                lineZero += 3;
+                                                                lineOne += 3;
+                                                                lineTwo += 3;
+
+                                                        }
             }
             br.close();
 
