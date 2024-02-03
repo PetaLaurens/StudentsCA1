@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class UserInput {
 
-    public void userManualInput() {
+    public void manualInput() {
 
         try {
 

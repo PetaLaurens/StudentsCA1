@@ -24,7 +24,7 @@ public class TxtFileHandling {
         try {
 
             // Reading the students.txt file
-            BufferedReader br = new BufferedReader(new FileReader("studentsTest.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("students.txt"));
             String studentsFile = br.readLine();
 
             // Starting point of txt file lines
@@ -37,7 +37,7 @@ public class TxtFileHandling {
                 studentsFile = br.readLine();
 
                 // Storing each line from the txt file into a list
-                List<String> lines = Files.lines(Paths.get("studentsTest.txt")).collect(Collectors.toList());
+                List<String> lines = Files.lines(Paths.get("students.txt")).collect(Collectors.toList());
 
                 /// FULL NAME ///
                 String studentFullName = lines.get(lineZero);

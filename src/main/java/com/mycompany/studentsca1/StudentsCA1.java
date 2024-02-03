@@ -11,30 +11,37 @@ import java.util.Scanner;
  * @author peta
  */
 public class StudentsCA1 {
+    
+    // Github repository: https://github.com/PetaLaurens/StudentsCA1
 
     public static void main(String[] args) {
 
         try {
-
+            
+            // Getting input from the user to see if they want Standard Operation or Manual Input program
             Scanner scan = new Scanner(System.in);
             System.out.println("Please enter S for Standard Operation or M for Manual Input: ");
             String userChoice = scan.next();
 
+            // Exception handling for wrong input (non S or M)
             if (!userChoice.matches("[a-zA-Z]+$")) {
-                System.out.println("Please enter S for Standard Operation or M for Manual Input.");
-
+                System.out.println("You can only enter S for Standard Operation or M for Manual Input.");
+                
+            // Condition to run Standard Operation program
             } else if (userChoice.matches("S")) {
 
                 TxtFileHandling reading = new TxtFileHandling();
                 reading.standardOperation();
-
+                    
+            // Condition to run Manual Input program
             } else if (userChoice.matches("M")) {
 
                 UserInput input = new UserInput();
-                input.userManualInput();
+                input.manualInput();
 
+            // Exception handling for wrong input (non S or M)
             } else {
-                System.out.println("Please enter S for Standard Operation or M for Manual Input.");
+                System.out.println("You can only enter S for Standard Operation or M for Manual Input.");
             }
 
         } catch (Exception e) {
